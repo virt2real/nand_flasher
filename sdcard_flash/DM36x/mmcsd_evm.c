@@ -120,7 +120,8 @@ Uint16 MMCSD_getCardCSD( MMCSD_ResponseData* mmcsdResponse, Uint16* cardCSD, MMC
     localCSDInfo->readBlkPartial    = ( cardCSD[4] >> 15 ) & 1;
     localCSDInfo->readBlkLenBytes   = 1 << ( cardCSD[5] & 0xF );
     // These bits are reserved in the case of SD card
-    localCSDInfo->sysSpecVersion    = ( cardCSD[7] >> 10 ) & 0xF;
+    //localCSDInfo->sysSpecVersion    = ( cardCSD[7] >> 10 ) & 0xF;
+    localCSDInfo->sysSpecVersion    = ( cardCSD[7] >> 12 ) & 0xF;
     return 0;
 }
 

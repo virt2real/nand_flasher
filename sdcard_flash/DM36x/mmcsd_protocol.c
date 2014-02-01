@@ -168,6 +168,10 @@ Uint16 MMCSD_singleBlkRead( Uint32 cardMemAddr, Uint32 *dest, Uint32 blklength, 
         if ( mmcsdCSDRegInfo.readBlkMisalign != 1 )
             return E_INVALID_INPUT;
 
+    if(mmcsdCSDRegInfo.sysSpecVersion)
+        cardMemAddr = cardMemAddr >> 9;
+
+
     if ( MMCSD_sendCmd( MMCSD_SET_BLOCKLEN, blklength, 0, MMCSD_STAT0_RSPDNE ) )
         return E_FAIL;
 
@@ -342,6 +346,10 @@ Uint16 MMCSD_cardIdentification( MMCSD_ConfigData* config, Uint32* rca, MMCSD_ca
     Uint16 cardReg[8];
     Uint8 mmc = 1;
 
+    int voltage_range = 0x00ff8000;
+    
+    FNSTART
+
     /* Place all cards in idle state */
     if ( status = MMCSD_goIdleState( ) )
         return status;
@@ -352,6 +360,12 @@ Uint16 MMCSD_cardIdentification( MMCSD_ConfigData* config, Uint32* rca, MMCSD_ca
     /* Introduce a delay for slow cards */
     EVMDM365_waitusec( 100000 );
 
+    if(MMCSD_sendCmd(8|MMCSD_RSP1, 0x1AA, 1, MMCSD_STAT0_RSPDNE) == 0) {
+            print_hex(MMCSD_MMCRSP01);
+            voltage_range |= (1<<30);
+    }
+
+
     status = MMCSD_appCmd( 0 );     /* Send CMD55 with RCA = 0 */
 
     if ( status )
@@ -359,7 +373,8 @@ Uint16 MMCSD_cardIdentification( MMCSD_ConfigData* config, Uint32* rca, MMCSD_ca
     else
     {
         // Experimenting with the whole supported voltage range
-        if ( SD_sendOpCond( 0x00ff8000, opTimeout ) )
+        //if ( SD_sendOpCond( 0x00ff8000, opTimeout ) )
+	if ( SD_sendOpCond( voltage_range, opTimeout ) )
             goto RESEND_CMD41;
         mmc = 0;
     }
