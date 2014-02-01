@@ -85,14 +85,16 @@ Uint32 DEVICE_init()
   
   DEVICE_pinmuxControl(0,0xFFFFFFFF,0x00FD0000);  // All Video Inputs
   DEVICE_pinmuxControl(1,0xFFFFFFFF,0x00145555);  // All Video Outputs
-  DEVICE_pinmuxControl(2,0xFFFFFFFF,0x000000DA);  // EMIFA
+  DEVICE_pinmuxControl(2,0xFFFFFFFF,0x000000D8);  // EMIFA
   DEVICE_pinmuxControl(3,0xFFFFFFFF,0x00180000);  // SPI0, SPI1, UART1, I2C, SD0, SD1, McBSP0, CLKOUTs
   DEVICE_pinmuxControl(4,0xFFFFFFFF,0x55555555);  // MMC/SD0 instead of MS, SPI0
 
-	GPIO->DIR02 &= 0xfeffffff;
-	GPIO->CLRDATA02 = 0x01000000;
-
-  // System PLL setup
+	GPIO->DIR23 &= 0xfeffffff;
+	GPIO->CLRDATA23 = 0x01000000;
+	GPIO->DIR45 &= ~(3<<10);//GPIO 73 & 74 are cofugured as outputs
+	GPIO->SETDATA45 = (1<<10);//Light up the led
+	GPIO->SETDATA45 = (1<<11);//Turn WP of (virt2real)
+	// System PLL setup
   if (status == E_PASS) status |= DEVICE_PLL1Init(PLL1_Mult);
   
   // DDR PLL setup

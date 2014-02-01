@@ -116,29 +116,30 @@ NAND_InfoObj gNandInfo;
 NAND_InfoHandle NAND_open(Uint32 baseCSAddr,  Uint8 busWidth)
 {
   NAND_InfoHandle hNandInfo;
-
+  print("Test 1\r\n");
   // Set NandInfo handle
 #ifdef USE_IN_ROM
   hNandInfo = (NAND_InfoHandle) &gNandInfo;
 #else
   hNandInfo = (NAND_InfoHandle) UTIL_allocMem(sizeof(NAND_InfoObj));
 #endif
-
+  print("Test 2\r\n");
   // Set NAND flash base address
   hNandInfo->flashBase = baseCSAddr;
-  
+  print("Test 3\r\n");
   // Init the current block number and good flag
   hNandInfo->currBlock = -1;     
   hNandInfo->isBlockGood = FALSE;  
-  
+  print("Test 4\r\n");
   // Use device specific page layout and ECC layout
   hNandInfo->hPageLayout  = &DEVICE_NAND_PAGE_layout;
   hNandInfo->hEccInfo     = &DEVICE_NAND_ECC_info;
   hNandInfo->hBbInfo      = &DEVICE_NAND_BB_info;
   hNandInfo->hChipInfo    = DEVICE_NAND_CHIP_infoTable;
-    
+  print("Test 5\r\n");
   // Get the CSOffset ( can be 0 through (DEVICE_EMIF_NUMBER_CE_REGION -1) )
   hNandInfo->CSOffset = 0;
+  print("Test 6\r\n");
   while (hNandInfo->CSOffset < DEVICE_EMIF_NUMBER_CE_REGION)
   {
     if ( (hNandInfo->flashBase >= (DEVICE_EMIF_FIRST_CE_START_ADDR + (DEVICE_EMIF_INTER_CE_REGION_SIZE * (hNandInfo->CSOffset+0)))) &&
@@ -149,29 +150,30 @@ NAND_InfoHandle NAND_open(Uint32 baseCSAddr,  Uint8 busWidth)
     }
     hNandInfo->CSOffset++;
   }
-
+  print("Test 7\r\n");
   if (hNandInfo->CSOffset == DEVICE_EMIF_NUMBER_CE_REGION)
     return NULL;
-    
+  print("Test 8\r\n");
   // Set EMIF bus width
   hNandInfo->busWidth = busWidth;
 
   // Setup AEMIF registers for NAND    
   AEMIF->NANDFCR |= (0x1 << (hNandInfo->CSOffset));        // NAND enable for CSx
+  print("Test 9.1\r\n");
   (*hNandInfo->hEccInfo->fxnEnable)(hNandInfo);
-                         
+  print("Test 10\r\n");
   // Send reset command to NAND
   if ( NAND_reset(hNandInfo) != E_PASS )
     return NULL;
-  
+  print("Test 11\r\n");
   // Get and set device details
   if ( LOCAL_flashGetDetails(hNandInfo) != E_PASS )
     return NULL;
-
+  print("Test 12\r\n");
   // Send reset command to NAND
   if ( NAND_reset(hNandInfo) != E_PASS )
     return NULL;
-  
+  print("Test 13\r\n");
   return hNandInfo;
 }
 
@@ -1408,4 +1410,9 @@ static Bool LOCAL_onfiParamPageCRCCheck(Uint8 *paramPageData)
 * End file                                                 *
 ***********************************************************/
 
+void __aeabi_unwind_cpp_pr0(void){
+}
+
+void __aeabi_unwind_cpp_pr1(void){
+}
 

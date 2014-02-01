@@ -108,6 +108,9 @@ DEVICE_SysModuleRegs;
 #define DEVICE_MISC_AIMWAITST_MASK      (0x00000001)
 #define DEVICE_MISC_TIMER2WDT_MASK      (0x00000010)
 
+/************************************************************
+* Global Function Definitions  (virt2real)                             *
+************************************************************/
 typedef struct _DEVICE_GPIO_REGS_
 {
   VUint32 PID;         //0x00
@@ -124,16 +127,36 @@ typedef struct _DEVICE_GPIO_REGS_
   VUint32 SETFAL01;         //0x2C
   VUint32 CLRFAL01;       //0x30
   VUint32 INTSTAT01;      //0x34
-  VUint32 DIR02;          //0x10
-  VUint32 OUTDATA02;            //0x14
-  VUint32 SETDATA02;         //0x18
-  VUint32 CLRDATA02;       //0x1C
-  VUint32 INDTATA02;       //0x20
-  VUint32 SETRIS02;        //0x24
-  VUint32 CLRRIS02;              //0x28
-  VUint32 SETFAL02;         //0x2C
-  VUint32 CLRFAL02;       //0x30
-  VUint32 INTSTAT02;      //0x34
+  VUint32 DIR23;          //0x38
+  VUint32 OUTDATA23;            //0x3c
+  VUint32 SETDATA23;         //0x40
+  VUint32 CLRDATA23;       //0x44
+  VUint32 INDTATA23;       //0x48
+  VUint32 RES231;        //0x4C Virt2real
+  VUint32 RES232;              //0x50
+  VUint32 RES233;         //0x54
+  VUint32 RES234;       //0x58
+  VUint32 RES235;      //0x5C
+  VUint32 DIR45;          //0x60
+  VUint32 OUTDATA45;            //0x64
+  VUint32 SETDATA45;         //0x68
+  VUint32 CLRDATA45;       //0x6C
+  VUint32 INDTATA45;       //0x70
+  VUint32 RES451;        //0x74
+  VUint32 RES452;              //0x78
+  VUint32 RES453;         //0x7C
+  VUint32 RES454;       //0x80
+  VUint32 RES455;      //0x84
+  VUint32 DIR06;          //0x88
+  VUint32 OUTDATA06;            //0x8C
+  VUint32 SETDATA06;         //0x90
+  VUint32 CLRDATA06;       //0x94
+  VUint32 INDTATA06;       //0x98
+  VUint32 SETRIS06;        //0x9C
+  VUint32 CLRRIS06;              //0xA0
+  VUint32 SETFAL06;         //0xA4
+  VUint32 CLRFAL06;       //0xA8
+  VUint32 INTSTAT06;      //0xAC
 }
 DEVICE_GPIORegs;
 
