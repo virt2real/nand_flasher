@@ -19,7 +19,7 @@ tags:
 clean:
 	make -C sdcard_flash PLATFORM=DM36x $@
 	make -C sdcard_flash PLATFORM=DM35x $@
-	rm -f dm3xx_boot_make_image
+	rm -f $(BIN)/dm3xx_boot_make_image
 
 $(BIN)/dm3xx_boot_make_image:	dm3xx_boot_make_image.c
 	@mkdir -p $(BIN)

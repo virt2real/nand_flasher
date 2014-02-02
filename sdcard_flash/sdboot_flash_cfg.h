@@ -5,7 +5,9 @@
 
 // locatins in RAM
 
-#define UBOOT_ADDR	(void*)0x81080000
+//#define UBOOT_ADDR	(void*)0x81080000
+#define UBOOT_ADDR	(void*)0x82000000
+
 #define KERNEL_ADDR	(void*)0x80700000 // uImage
 //#define KERNEL_ADDR	(void*)0x80008000 // Image, ready to run
 #define ROOTFS_ADDR	(void*)0x82000000
@@ -28,7 +30,9 @@
 #define UBL_SIZE (30*KB) // max UBL size is 30 KB
 //#define UBL_ENTRY UBL_GNU_ENTRY
 #define UBL_ENTRY UBL_CCS_ENTRY
-#define UBOOT_SIZE (160*KB)
+//#define UBOOT_SIZE (160*KB)
+#define UBOOT_SIZE (512*KB)
+
 #define KERNEL_SIZE (3*MB)
 #define ROOTFS_SIZE (4*MB)
 
@@ -39,7 +43,9 @@
 #define TEST_SDC	0x008000
 #define UBL_SDC 	0x010000
 #define UBOOT_SDC	0x020000
-#define KERNEL_SDC	0x060000
+//#define KERNEL_SDC	0x060000
+#define KERNEL_SDC	0x080000
+
 #define ROOTFS_SDC	0x400000
 
 #define MAGIC_NUMBER_VALID          (0xA1ACED00)
