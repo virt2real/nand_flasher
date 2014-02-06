@@ -38,7 +38,13 @@ SECTIONS
     *(.boot)
     . = ALIGN(4);
   }
-  .text    : AT ( LOADADDR(.boot) + SIZEOF(.boot) )
+  .text.startup    : AT ( LOADADDR(.boot) + SIZEOF(.boot) )
+  {
+    *(.text)
+    . = ALIGN(4);
+  }
+
+  .text    : AT ( LOADADDR(.text.startup) + SIZEOF(.text.startup) )
   {
     *(.text)
     . = ALIGN(4);
@@ -46,7 +52,7 @@ SECTIONS
   
   /* Move into DRAM for placing const and data sections */
   . += (DRAMStart - IRAMStart);
-  .rodata    : AT ( LOADADDR(.text) + SIZEOF(.text) )
+  .rodata    : AT ( LOADADDR(.text.startup) + SIZEOF(.text.startup) )
   {
     *(.rodata*)
     *(.rodata)
